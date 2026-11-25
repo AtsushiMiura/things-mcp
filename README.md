@@ -1,5 +1,7 @@
 # Things MCP Server
 
+For the local Codex and Claude Code plugin in this fork, see [Things Ideas](docs/local-plugin.md).
+
 This [Model Context Protocol (MCP)](https://modelcontextprotocol.io/introduction) server lets you use ChatGPT, Codex, Claude Desktop, and other MCP clients to interact with your task management data in [Things 3](https://culturedcode.com/things) from Cultured Code. You can ask your assistant to create tasks, analyze projects, help manage priorities, and more.
 
 This server leverages the [Things.py](https://github.com/thingsapi/things.py) library and the [Things URL Scheme](https://culturedcode.com/things/help/url-scheme/). 

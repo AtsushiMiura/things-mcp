@@ -1,0 +1,12 @@
+{
+  "name": "things-ideas",
+  "version": "0.1.0",
+  "description": "Turn a discussion into ideas, headings and checklists in Things on this Mac.",
+  "mcpServers": {
+    "things": {
+      "command": "uv",
+      "args": ["run", "--locked", "--project", "${CLAUDE_PLUGIN_ROOT}", "things-mcp"],
+      "env": { "THINGS_MCP_TRANSPORT": "stdio" }
+    }
+  }
+}

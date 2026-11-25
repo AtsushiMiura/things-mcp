@@ -8,7 +8,7 @@ import things
 from fastmcp import FastMCP
 from fastmcp.tools.tool import ToolResult
 from .formatters import format_todo, format_project, format_area, format_tag, format_heading
-from . import url_scheme
+from . import headings, url_scheme
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -658,6 +658,15 @@ async def add_todo(
     )
     url_scheme.execute_url(url)
     return f"Created new todo: {title}"
+
+@mcp.tool
+def add_heading(project_id: str, title: str) -> str:
+    """Create a heading in an existing Things project and return its ID."""
+    project = things.get(project_id) if project_id.strip() else None
+    if not project or project.get("type") != "project":
+        raise ValueError("An existing Things project ID is required.")
+    return headings.create_heading(project_id, title)
+
 
 @mcp.tool
 async def add_area(title: str) -> str:

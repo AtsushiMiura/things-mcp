@@ -1,0 +1,6 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "things-ideas",
+  "version": "0.1.0",
+  "description": "Turn a discussion into ideas, headings and checklists in Things on this Mac."
+}

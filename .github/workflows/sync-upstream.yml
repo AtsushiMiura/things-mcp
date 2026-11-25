@@ -1,0 +1,35 @@
+name: Review upstream updates
+on:
+  schedule:
+    - cron: '23 23 * * 0'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency: sync-things-upstream
+
+jobs:
+  sync:
+    if: github.repository == 'AtsushiMiura/things-mcp' && github.event.repository.default_branch != 'master'
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
+      REPO: ${{ github.repository }}
+      BASE: ${{ github.event.repository.default_branch }}
+    steps:
+      - name: Fast-forward the mirror and propose updates
+        shell: bash
+        run: |
+          set -euo pipefail
+          sha=$(gh api repos/hald/things-mcp/git/ref/heads/master --jq .object.sha)
+          gh api --method PATCH "repos/$REPO/git/refs/heads/master" -f sha="$sha" -F force=false >/dev/null
+          ahead=$(gh api "repos/$REPO/compare/$BASE...master" --jq .ahead_by)
+          if [[ "$ahead" == 0 ]]; then exit 0; fi
+          existing=$(gh pr list --repo "$REPO" --base "$BASE" --head master --state open --json number --jq length)
+          if [[ "$existing" == 0 ]]; then
+            gh pr create --repo "$REPO" --base "$BASE" --head master \
+              --title 'Review upstream Things MCP updates' \
+              --body 'Review upstream changes and run the plugin tests before merging. Merge with a merge commit to preserve upstream ancestry.'
+          fi
