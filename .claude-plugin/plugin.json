@@ -1,6 +1,6 @@
 {
   "name": "things-ideas",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Turn a discussion into ideas, headings and checklists in Things on this Mac.",
   "mcpServers": {
     "things": {
